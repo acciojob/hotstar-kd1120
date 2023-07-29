@@ -50,8 +50,6 @@ public class SubscriptionService {
         subscription.setUser(user);
         subscription.setSubscriptionType(subscriptionEntryDto.getSubscriptionType());
         subscription.setNoOfScreensSubscribed(subscriptionEntryDto.getNoOfScreensRequired());
-        Date date = new Date();
-        subscription.setStartSubscriptionDate(date);
         subscription.setTotalAmountPaid(total);
 
         user.setSubscription(subscription);
@@ -84,16 +82,19 @@ public class SubscriptionService {
             subscription.setSubscriptionType(SubscriptionType.PRO);
             int newPrice = 800 + (250 * noOfScreens);
         priceDiff = newPrice - currPrice;
-        subscription.setTotalAmountPaid(newPrice);
+        subscription.setTotalAmountPaid(newPrice + currPrice);
         }
         else{
             subscription.setSubscriptionType(SubscriptionType.ELITE);
             int newPrice = 1000 + ( 300 * noOfScreens);
             priceDiff = newPrice - currPrice;
-            subscription.setTotalAmountPaid(newPrice);
+            subscription.setTotalAmountPaid(newPrice + currPrice);
         }
 
+        user.setSubscription(subscription);
+
         subscriptionRepository.save(subscription);
+
 
 
 

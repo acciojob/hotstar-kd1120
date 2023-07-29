@@ -27,7 +27,11 @@ public class UserService {
 
     User savedUser  = userRepository.save(user);
 
-        //Jut simply add the user to the Db and return the userId returned by the repository
+    savedUser.setName(user.getName());
+
+    savedUser.setAge(user.getAge());
+    savedUser.setMobNo(user.getMobNo());
+savedUser.setSubscription(user.getSubscription());        //Jut simply add the user to the Db and return the userId returned by the repository
         return savedUser.getId();
     }
 
@@ -42,27 +46,33 @@ public class UserService {
         int userAge = user.getAge();
         SubscriptionType subscriptionType = user.getSubscription().getSubscriptionType();
         int availabeWebSeries = 0;
-        if(subscriptionType == SubscriptionType.BASIC){
-            for(WebSeries webSeries : webSeriesList){
-                if(webSeries.getSubscriptionType() == subscriptionType && webSeries.getAgeLimit()<= user.getAge()){
-                    availabeWebSeries++;
-                }
+//        if(subscriptionType == SubscriptionType.BASIC){
+//            for(WebSeries webSeries : webSeriesList){
+//                if(webSeries.getSubscriptionType() == subscriptionType && webSeries.getAgeLimit()<= user.getAge()){
+//                    availabeWebSeries++;
+//                }
+//            }
+//        }
+//        if(subscriptionType == SubscriptionType.PRO){
+//            for(WebSeries webSeries: webSeriesList){
+//                if((webSeries.getSubscriptionType() == subscriptionType || webSeries.getSubscriptionType()== SubscriptionType.BASIC)&& webSeries.getAgeLimit() <=user.getAge()){
+//                    availabeWebSeries++;
+//                }
+//            }
+//        }
+//        else{
+//            for(WebSeries webSeries: webSeriesList){
+//                if(webSeries.getAgeLimit()<=user.getAge()){
+//                    availabeWebSeries++;
+//                }
+//            }
+//        }
+        for(WebSeries webSeries : webSeriesList){
+            if(webSeries.getAgeLimit()<= userAge){
+                availabeWebSeries++;
             }
         }
-        if(subscriptionType == SubscriptionType.PRO){
-            for(WebSeries webSeries: webSeriesList){
-                if((webSeries.getSubscriptionType() == subscriptionType || webSeries.getSubscriptionType()== SubscriptionType.BASIC)&& webSeries.getAgeLimit() <=user.getAge()){
-                    availabeWebSeries++;
-                }
-            }
-        }
-        else{
-            for(WebSeries webSeries: webSeriesList){
-                if(webSeries.getAgeLimit()<=user.getAge()){
-                    availabeWebSeries++;
-                }
-            }
-        }
+
         return availabeWebSeries;
 
 
